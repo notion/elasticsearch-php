@@ -62,6 +62,7 @@ class Bulk extends AbstractEndpoint implements BulkEndpointInterface
         return array(
             'consistency',
             'refresh',
+            'routing',
             'replication',
             'type',
             'fields',
