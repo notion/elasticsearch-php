@@ -38,6 +38,27 @@ interface ConnectionInterface
     public function getTransportSchema();
 
     /**
+     * Get the hostname for this connection
+     *
+     * @return string
+     */
+    public function getHost();
+
+    /**
+     * Get the username:password string for this connection, null if not set
+     *
+     * @return null|string
+     */
+    public function getUserPass();
+
+    /**
+     * Get the URL path suffix, null if not set
+     *
+     * @return null|string;
+     */
+    public function getPath();
+
+    /**
      * Check to see if this instance is marked as 'alive'
      *
      * @return bool

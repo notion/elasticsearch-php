@@ -32,6 +32,8 @@ class Help extends AbstractEndpoint
     {
         return array(
             'help',
+            's',
+            'format',
         );
     }
 

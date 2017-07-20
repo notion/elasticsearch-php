@@ -23,7 +23,6 @@ class SearchResponseIteratorTest extends \PHPUnit_Framework_TestCase
     public function testWithNoResults()
     {
         $search_params = array(
-            'search_type' => 'scan',
             'scroll'      => '5m',
             'index'       => 'twitter',
             'size'        => 1000,
@@ -43,32 +42,7 @@ class SearchResponseIteratorTest extends \PHPUnit_Framework_TestCase
             ->andReturn(array('_scroll_id' => 'scroll_id_01'));
 
         $mock_client->shouldReceive('scroll')
-            ->once()
-            ->ordered()
-            ->with(
-                array(
-                    'scroll_id' => 'scroll_id_01',
-                    'scroll'    => '5m'
-                )
-            )
-            ->andReturn(
-                array(
-                    '_scroll_id' => 'scroll_id_02',
-                    'hits' => array(
-                        'hits' => array(
-                        )
-                    )
-                )
-            );
-
-        $mock_client->shouldReceive('scroll')
-            ->never()
-            ->with(
-                array(
-                    'scroll_id' => 'scroll_id_02',
-                    'scroll'    => '5m'
-                )
-            );
+            ->never();
 
         $mock_client->shouldReceive('clearScroll')
             ->once()
@@ -78,16 +52,12 @@ class SearchResponseIteratorTest extends \PHPUnit_Framework_TestCase
 
         $responses = new SearchResponseIterator($mock_client, $search_params);
 
-        foreach ($responses as $i => $response) {
-        }
-
-        $this->assertEquals(0, $i);
+        $this->assertCount(0, $responses);
     }
 
-    public function testWithScan()
+    public function testWithHits()
     {
         $search_params = array(
-            'search_type' => 'scan',
             'scroll'      => '5m',
             'index'       => 'twitter',
             'size'        => 1000,
@@ -104,72 +74,85 @@ class SearchResponseIteratorTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->ordered()
             ->with($search_params)
-            ->andReturn(array('_scroll_id' => 'scroll_id_01'));
+            ->andReturn([
+                '_scroll_id' => 'scroll_id_01',
+                'hits' => [
+                    'hits' => [
+                        [
+                            'foo' => 'bar'
+                        ]
+                    ]
+                ]
+            ]);
 
         $mock_client->shouldReceive('scroll')
             ->once()
             ->ordered()
             ->with(
-                array(
+                [
                     'scroll_id'  => 'scroll_id_01',
                     'scroll' => '5m'
-                )
+                ]
             )
             ->andReturn(
-                array(
+                [
                     '_scroll_id' => 'scroll_id_02',
-                    'hits' => array(
-                        'hits' => array(
-                            array()
-                        )
-                    )
-                )
-            );
+                    'hits' => [
+                        'hits' => [
+                            [
+                                'foo' => 'bar'
+                            ]
+                        ]
+                    ]
+                ]);
 
         $mock_client->shouldReceive('scroll')
             ->once()
             ->ordered()
             ->with(
-                array(
+                [
                     'scroll_id'  => 'scroll_id_02',
                     'scroll' => '5m'
-                )
+                ]
             )
             ->andReturn(
-                array(
+                [
                     '_scroll_id' => 'scroll_id_03',
-                    'hits' => array(
-                        'hits' => array(
-                            array()
-                        )
-                    )
-                )
+                    'hits' => [
+                        'hits' => [
+                            [
+                                'foo' => 'bar'
+                            ]
+                        ]
+                    ]
+                ]
             );
 
         $mock_client->shouldReceive('scroll')
             ->once()
             ->ordered()
             ->with(
-                array(
+                [
                     'scroll_id'  => 'scroll_id_03',
                     'scroll' => '5m'
-                )
+                ]
             )
             ->andReturn(
-                array(
+                [
                     '_scroll_id' => 'scroll_id_04',
-                    'hits' => array(
-                    )
-                )
+                    'hits' => [
+                        'hits' => []
+                    ]
+                ]
             );
 
         $mock_client->shouldReceive('scroll')
             ->never()
             ->with(
-                array(
+                [
                     'scroll_id'  => 'scroll_id_04',
                     'scroll' => '5m'
-                )
+                ]
             );
 
         $mock_client->shouldReceive('clearScroll')
@@ -179,9 +162,6 @@ class SearchResponseIteratorTest extends \PHPUnit_Framework_TestCase
 
         $responses = new SearchResponseIterator($mock_client, $search_params);
 
-        foreach ($responses as $i => $response) {
-        }
-
-        $this->assertEquals(2, $i);
+        $this->assertCount(4, $responses);
     }
 }

@@ -36,6 +36,8 @@ class Plugins extends AbstractEndpoint
             'h',
             'help',
             'v',
+            's',
+            'format',
         );
     }
 

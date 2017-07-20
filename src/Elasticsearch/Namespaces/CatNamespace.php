@@ -35,9 +35,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Aliases');
         $endpoint->setName($name);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -63,9 +62,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Allocation');
         $endpoint->setNodeID($nodeID);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -90,9 +88,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Count');
         $endpoint->setIndex($index);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -115,9 +112,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Health $endpoint */
         $endpoint = $endpointBuilder('Cat\Health');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -135,9 +131,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Help $endpoint */
         $endpoint = $endpointBuilder('Cat\Help');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -164,9 +159,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Indices');
         $endpoint->setIndex($index);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -188,9 +182,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Master $endpoint */
         $endpoint = $endpointBuilder('Cat\Master');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -212,9 +205,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Nodes $endpoint */
         $endpoint = $endpointBuilder('Cat\Nodes');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -236,9 +228,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\NodeAttrs $endpoint */
         $endpoint = $endpointBuilder('Cat\NodeAttrs');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -260,9 +251,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\PendingTasks $endpoint */
         $endpoint = $endpointBuilder('Cat\PendingTasks');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -288,9 +278,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Recovery');
         $endpoint->setIndex($index);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -312,9 +301,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Repositories $endpoint */
         $endpoint = $endpointBuilder('Cat\Repositories');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -340,9 +328,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Shards');
         $endpoint->setIndex($index);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -369,9 +356,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Snapshots');
         $endpoint->setRepository($repository);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -398,9 +384,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\ThreadPool');
         $endpoint->setIndex($index);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -427,9 +412,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Fielddata');
         $endpoint->setFields($fields);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -451,9 +435,8 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Plugins $endpoint */
         $endpoint = $endpointBuilder('Cat\Plugins');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -476,9 +459,8 @@ class CatNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Cat\Segments');
         $endpoint->setIndex($index);
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
     }
 
     /**
@@ -505,8 +487,34 @@ class CatNamespace extends AbstractNamespace
         /** @var \Elasticsearch\Endpoints\Cat\Tasks $endpoint */
         $endpoint = $endpointBuilder('Cat\Tasks');
         $endpoint->setParams($params);
-        $response = $this->performRequest($endpoint);
 
-        return $endpoint->resultOrFuture($response);
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * $params['local']          = (bool) Return local information, do not retrieve the state from master node (default: false)
+     *        ['master_timeout'] = (time) Explicit operation timeout for connection to master node
+     *        ['h']              = (list) Comma-separated list of column names to display
+     *        ['help']           = (bool) Return help information
+     *        ['v']              = (bool) Verbose mode. Display column headers
+     *        ['bytes']          = (enum) The unit in which to display byte values
+     *
+     * @param $params array Associative array of parameters
+     *
+     * @return array
+     */
+    public function templates($params = array())
+    {
+        $name = $this->extractArgument($params, 'name');
+
+        /** @var callback $endpointBuilder */
+        $endpointBuilder = $this->endpoints;
+
+        /** @var \Elasticsearch\Endpoints\Cat\Templates $endpoint */
+        $endpoint = $endpointBuilder('Cat\Templates');
+        $endpoint->setName($name)
+            ->setParams($params);
+
+        return $this->performRequest($endpoint);
     }
 }

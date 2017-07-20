@@ -46,7 +46,7 @@ abstract class AbstractNamespace
             $params = (array) $params;
         }
 
-        if (isset($params[$arg]) === true) {
+        if (array_key_exists($arg, $params) === true) {
             $val = $params[$arg];
             unset($params[$arg]);
 
@@ -64,12 +64,14 @@ abstract class AbstractNamespace
      */
     protected function performRequest(AbstractEndpoint $endpoint)
     {
-        return $this->transport->performRequest(
+        $response = $this->transport->performRequest(
             $endpoint->getMethod(),
             $endpoint->getURI(),
             $endpoint->getParams(),
             $endpoint->getBody(),
             $endpoint->getOptions()
         );
+
+        return $this->transport->resultOrFuture($response, $endpoint->getOptions());
     }
 }

@@ -61,6 +61,8 @@ class Allocation extends AbstractEndpoint
             'h',
             'help',
             'v',
+            's',
+            'format',
         );
     }
 

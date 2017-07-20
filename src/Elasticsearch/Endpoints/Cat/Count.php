@@ -41,6 +41,8 @@ class Count extends AbstractEndpoint
             'h',
             'help',
             'v',
+            's',
+            'format',
         );
     }
 

@@ -71,6 +71,9 @@ class ClientBuilder
     /** @var array */
     private $hosts;
 
+    /** @var array */
+    private $connectionParams;
+
     /** @var  int */
     private $retries;
 
@@ -92,6 +95,36 @@ class ClientBuilder
     public static function create()
     {
         return new static();
+    }
+
+    /**
+     * Can supply first parm to Client::__construct() when invoking manually or with dependency injection
+     * @return this->ransport
+     *
+     */
+    public function getTransport()
+    {
+        return $this->transport;
+    }
+
+    /**
+     * Can supply second parm to Client::__construct() when invoking manually or with dependency injection
+     * @return this->endpoint
+     *
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * Can supply third parm to Client::__construct() when invoking manually or with dependency injection
+     * @return this->registeredNamespacesBuilders
+     *
+     */
+    public function getRegisteredNamespacesBuilders()
+    {
+        return $this->registeredNamespacesBuilders;
     }
 
     /**
@@ -313,6 +346,17 @@ class ClientBuilder
     }
 
     /**
+     * @param array $params
+     * @return $this
+     */
+    public function setConnectionParams(array $params)
+    {
+        $this->connectionParams = $params;
+
+        return $this;
+    }
+
+    /**
      * @param int $retries
      * @return $this
      */
@@ -425,8 +469,27 @@ class ClientBuilder
         }
 
         if (is_null($this->connectionFactory)) {
-            $connectionParams = [];
-            $this->connectionFactory = new ConnectionFactory($this->handler, $connectionParams, $this->serializer, $this->logger, $this->tracer);
+            if (is_null($this->connectionParams)) {
+                $this->connectionParams = [];
+            }
+
+            // Make sure we are setting Content-type and Accept (unless the user has explicitly
+            // overridden it
+            if (isset($this->connectionParams['client']['headers']) === false) {
+                $this->connectionParams['client']['headers'] = [
+                    'Content-type' => ['application/json'],
+                    'Accept' => ['application/json']
+                ];
+            } else {
+                if (isset($this->connectionParams['client']['headers']['Content-type']) === false) {
+                    $this->connectionParams['client']['headers']['Content-type'] = ['application/json'];
+                }
+                if (isset($this->connectionParams['client']['headers']['Accept']) === false) {
+                    $this->connectionParams['client']['headers']['Accept'] = ['application/json'];
+                }
+            }
+
+            $this->connectionFactory = new ConnectionFactory($this->handler, $this->connectionParams, $this->serializer, $this->logger, $this->tracer);
         }
 
         if (is_null($this->hosts)) {
@@ -540,17 +603,44 @@ class ClientBuilder
     private function buildConnectionsFromHosts($hosts)
     {
         if (is_array($hosts) === false) {
-            throw new InvalidArgumentException('Hosts parameter must be an array of strings');
+            $this->logger->error("Hosts parameter must be an array of strings, or an array of Connection hashes.");
+            throw new InvalidArgumentException('Hosts parameter must be an array of strings, or an array of Connection hashes.');
         }
 
         $connections = [];
         foreach ($hosts as $host) {
-            $host = $this->prependMissingScheme($host);
-            $host = $this->extractURIParts($host);
+            if (is_string($host)) {
+                $host = $this->prependMissingScheme($host);
+                $host = $this->extractURIParts($host);
+            } else if (is_array($host)) {
+                $host = $this->normalizeExtendedHost($host);
+            } else {
+                $this->logger->error("Could not parse host: ".print_r($host, true));
+                throw new RuntimeException("Could not parse host: ".print_r($host, true));
+            }
             $connections[] = $this->connectionFactory->create($host);
         }
 
         return $connections;
+    }
+
+    /**
+     * @param $host
+     * @return array
+     */
+    private function normalizeExtendedHost($host) {
+        if (isset($host['host']) === false) {
+            $this->logger->error("Required 'host' was not defined in extended format: ".print_r($host, true));
+            throw new RuntimeException("Required 'host' was not defined in extended format: ".print_r($host, true));
+        }
+
+        if (isset($host['scheme']) === false) {
+            $host['scheme'] = 'http';
+        }
+        if (isset($host['port']) === false) {
+            $host['port'] = '9200';
+        }
+        return $host;
     }
 
     /**

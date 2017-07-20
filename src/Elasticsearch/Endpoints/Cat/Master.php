@@ -36,6 +36,8 @@ class Master extends AbstractEndpoint
             'h',
             'help',
             'v',
+            's',
+            'format',
         );
     }
 

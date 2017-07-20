@@ -71,11 +71,6 @@ class Index extends AbstractEndpoint
         if (isset($id) === true) {
             $uri = "/$index/$type/$id";
         }
-
-        if ($this->createIfAbsent === true) {
-            $uri .= $this->addCreateFlag();
-        }
-
         return $uri;
     }
 
@@ -123,17 +118,6 @@ class Index extends AbstractEndpoint
             throw new Exceptions\RuntimeException('Document body must be set for index request');
         } else {
             return $this->body;
-        }
-    }
-
-    private function addCreateFlag()
-    {
-        if (isset($this->id) === true) {
-            return '/_create';
-        } else {
-            $this->params['op_type'] = 'create';
-
-            return "";
         }
     }
 }
